@@ -1,0 +1,4 @@
+#ignore files
+
+__pycache__/
+result.txt

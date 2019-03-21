@@ -1,0 +1,38 @@
+# IntelliJ
+.idea/
+*.eml
+*.iml
+*.ipr
+*.iws
+
+# Eclipse
+.classpath
+.project
+.metadata
+.settings/
+local.properties
+
+# Cscope
+cscope.*
+
+# NetBeans
+nbbuild/
+nbdist/
+nbproject/
+nb-configuration.xml
+nbactions.xml
+
+# Maven, etc.
+out/
+target/
+
+# General
+*.pyc
+*~
+*.bak
+*.sw[o,p]
+*.tmp
+.DS_Store
+Thumbs.db
+
+data/full.csv
