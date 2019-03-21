@@ -29,34 +29,34 @@
   
 ### Get Cassandra Database (on client and replicas)
     cd /tmp/
-    git clone https://github.com/hyperpro/MH-Cassandra.git
+    git clone https://github.com/hyperpro/CassRepo.git
     
     #client 1
-    cd /tmp/MH-Cassandra/cassandra-3.9/
+    cd /tmp/CassRepo/cassandra-3.9/
     cp conf/cassandra1.yaml conf/cassandra.yaml
     cd bin
     sudo chmod 777 cassandra
-    cd /tmp/MH-Cassandra/cassandra-3.9/bin
+    cd /tmp/CassRepo/cassandra-3.9/bin
     ./cassandra -f
 
     #client 2
-    cd /tmp/MH-Cassandra/cassandra-3.9/
+    cd /tmp/CassRepo/cassandra-3.9/
     cp conf/cassandra2.yaml conf/cassandra.yaml
     cd bin
     sudo chmod 777 cassandra
-    cd /tmp/MH-Cassandra/cassandra-3.9/bin
+    cd /tmp/CassRepo/cassandra-3.9/bin
     ./cassandra -f
     
     #client 3
-    cd /tmp/MH-Cassandra/cassandra-3.9/
+    cd /tmp/CassRepo/cassandra-3.9/
     cp conf/cassandra3.yaml conf/cassandra.yaml
     cd bin
     sudo chmod 777 cassandra
-    cd /tmp/MH-Cassandra/cassandra-3.9/bin
+    cd /tmp/CassRepo/cassandra-3.9/bin
     ./cassandra -f
 
 ### Cassndra Interface
-    cd /tmp/MH-Cassandra/cassandra-3.9/bin
+    cd /tmp/CassRepo/cassandra-3.9/bin
     chmod 777 cqlsh
     ./cqlsh $thisIP 
 
@@ -94,7 +94,7 @@ Clear old database
 
 Insert data
 
-    cd /tmp/MH-Cassandra/ycsb-0.15.0
+    cd /tmp/CassRepo/ycsb-0.15.0
     ./bin/ycsb load cassandra-cql -P workloads/workload_test -p hosts=IP -threads 10
 
 

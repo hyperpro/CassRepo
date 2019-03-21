@@ -13,6 +13,7 @@ import math
 import random
 
 
+# you should put the IPs of replicas in the hosts
 hosts = ['155.98.39.107', '155.98.39.108', '155.98.39.118']
 sender = ClientSender(hosts)
 
