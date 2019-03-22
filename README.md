@@ -110,18 +110,18 @@ sender = ClientSender(hosts)
 ```
 
 ### Send A Request
-To send a request we use this method `sendOneRequest(host, type, interval = 0)`. `host` is IP address of target cassandra replica that we want to send a request, `type` is type of request (read, scan, insert, update) we use defined type from QueryType in constants.py, and `interval` is interval between request. 
+To send a request we use this method `sendOneRequest(host, type, interval, req_id)`. `host` is IP address of target cassandra replica that we want to send a request, `type` is type of request (read, scan, insert, update) we use defined type from QueryType in constants.py, `interval` is interval between request, and `req_id` is the request id which is unique. 
 ```python
 from client_sender import ClientSender
 from constant import QueryType
 
 hosts = ['127.0.0.1', '127.0.0.2']
 sender = ClientSender(hosts)
-
-sender.sendOneRequest(hosts[0], QueryType.READ, 0.01) #next line instruction will be sent after 0.01 second
-sender.sendOneRequest(hosts[1], QueryType.SCAN, 0.01)
-sender.sendOneRequest(hosts[0], QueryType.INSERT) #interval = 0
-sender.sendOneRequest(hosts[1], QueryType.UPDATE)
+#next line instruction will be sent after 0.01 second, 20-23 are the IDs of requests.
+sender.sendOneRequest(hosts[0], QueryType.READ, 0.01, 20) 
+sender.sendOneRequest(hosts[1], QueryType.SCAN, 0.01, 21)
+sender.sendOneRequest(hosts[0], QueryType.INSERT, 0.01, 22)
+sender.sendOneRequest(hosts[1], QueryType.UPDATE, 0.01, 23)
 ```
 
 ### Get Latency
@@ -133,11 +133,38 @@ from constant import QueryType
 hosts = ['127.0.0.1', '127.0.0.2']
 sender = ClientSender(hosts)
 
-sender.sendOneRequest(hosts[0], QueryType.READ, 0.01) #next request will be sent after 0.01 second
-sender.sendOneRequest(hosts[1], QueryType.SCAN, 0.01)
-sender.sendOneRequest(hosts[0], QueryType.INSERT) #interval = 0
-sender.sendOneRequest(hosts[1], QueryType.UPDATE)
+sender.sendOneRequest(hosts[0], QueryType.READ, 0.01, 20) 
+sender.sendOneRequest(hosts[1], QueryType.SCAN, 0.01, 21)
+sender.sendOneRequest(hosts[0], QueryType.INSERT, 0.01, 22)
+sender.sendOneRequest(hosts[1], QueryType.UPDATE, 0.01, 23)
 latency = sender.getLatencies()
-print(latency)
+print(latency[20], latency[21], latency[22], latency[23])
+'''
+latency is a dictionary, where key is req_id and value is the latency.
+'''
 ```
 For the code above, we sent 4 requests so we will get 4 latency in an array.
+
+## Run experiments
+
+All the programs are inside the `scripts` folder.
+
+Run a full experiment
+
+    python3 ourclient.py THROUGHPUT
+    
+The parameter `THROUGHPUT` is the target throughput which ranges from [90, 150].
+
+### Fast run
+
+If you already build the workload-latency profile by `wlp.build_profile(sender = sender, hosts=hosts)` in `scripts/ourclient.py`.
+When running the next experiment just after the previous one, you don't have to re-build the profile. Just comment it is OK.
+
+### Use emulator
+
+The above 'fast run' method is still not fast enough, since it has to go through all the traces. Our simulator output the similar (actually is the same)
+as the real client. Its usage is also similar to run the real experiment.
+
+    python3 clientsimulator.py THROUGHPUT
+
+
